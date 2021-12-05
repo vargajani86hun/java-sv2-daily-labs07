@@ -24,10 +24,19 @@ class CourierTest {
     @Test
     void testAddInvalidRide() {
         Courier courier = new Courier();
-        courier.addRide(new Ride(DayOfWeek.MONDAY, 1, 1.2));
-        courier.addRide(new Ride(DayOfWeek.TUESDAY, 3, 1.2));
         IllegalArgumentException iae = assertThrows(IllegalArgumentException.class,
+                () -> courier.addRide(new Ride(DayOfWeek.FRIDAY, 2, 1.1)));
+        assertEquals("New ride unable to be earlier than the last.", iae.getMessage());
+
+        courier.addRide(new Ride(DayOfWeek.MONDAY, 1, 1.2));
+        courier.addRide(new Ride(DayOfWeek.TUESDAY, 1, 1.2));
+        iae = assertThrows(IllegalArgumentException.class,
                 () -> courier.addRide(new Ride(DayOfWeek.MONDAY, 5, 1.2)));
         assertEquals("New ride unable to be earlier than the last.", iae.getMessage());
+
+        iae = assertThrows(IllegalArgumentException.class,
+                () -> courier.addRide(new Ride(DayOfWeek.WEDNESDAY, 3, 2.1)));
+        assertEquals("New ride unable to be earlier than the last.", iae.getMessage());
+
     }
 }

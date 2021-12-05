@@ -11,6 +11,19 @@ public class Ride {
         this.distance = distance;
     }
 
+    public boolean isBefore(Ride ride) {
+        if (this.dayOfWeek.compareTo(ride.dayOfWeek) < 0) {
+            return ride.occasion == 1;
+        }
+        else if (this.dayOfWeek.equals(ride.dayOfWeek) &&
+                this.occasion < ride.occasion) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     public DayOfWeek getDayOfWeek() {
         return dayOfWeek;
     }
